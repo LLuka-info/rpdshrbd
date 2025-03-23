@@ -5,7 +5,7 @@ import { Button } from "../../components/ui/button";
 import { Loader2 } from "lucide-react";
 
 interface Product {
-  popular: any;
+  popular: boolean;
   _id: string;
   name: string;
   price: number;
