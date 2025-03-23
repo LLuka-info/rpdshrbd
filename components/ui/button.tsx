@@ -1,6 +1,7 @@
 import React from "react";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, ...props }, ref) => {
   return (
