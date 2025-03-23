@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import axios from "axios";
-import styles from "./AnnouncementBar.module.css";
+
 type ExtendedAppProps = AppProps & {
   Component: AppProps["Component"] & {
     auth?: boolean;

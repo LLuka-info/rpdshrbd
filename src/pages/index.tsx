@@ -13,6 +13,7 @@ interface Product {
   images: string[];
 }
 
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);

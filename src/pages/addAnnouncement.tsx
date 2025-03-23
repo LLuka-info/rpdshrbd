@@ -1,39 +1,43 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { Button } from "../../components/ui/button";
 
+// Types
 interface Announcement {
   _id: string;
   message: string;
 }
 
+interface Order {
+  _id: string;
+  userId: string;
+  total: number;
+  status: string;
+}
+
 export default function AddAnnouncementPage() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [newAnnouncement, setNewAnnouncement] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const userId = user.id; // Assuming the user object contains an `id` field
+    const userId = user.id;
 
     if (!userId) {
       console.error("User ID not found in localStorage");
       return;
     }
 
-    // Fetch orders
     axios
       .get(`http://localhost:5000/api/orders?userId=${userId}`)
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Orders error:", err));
 
-    // Fetch announcements
     axios
       .get(`http://localhost:5000/api/announcements`)
       .then((res) => {
-        console.log("Announcements fetched:", res.data); // Debug log
+        console.log("Announcements fetched:", res.data);
         setAnnouncements(res.data);
       })
       .catch((err) => {
@@ -45,12 +49,12 @@ export default function AddAnnouncementPage() {
   const addAnnouncement = async () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = user.token;
-  
+
     if (!token) {
       alert("No token found. Please log in.");
       return;
     }
-  
+
     try {
       const res = await axios.post(
         `http://localhost:5000/api/announcements`,
@@ -61,16 +65,19 @@ export default function AddAnnouncementPage() {
           },
         }
       );
-  
+
       setAnnouncements([res.data, ...announcements]);
       setNewAnnouncement("");
-    } catch (error: any) {
-      console.error("Add announcement error:", error);
-      alert(error?.response?.data?.message || "Failed to add announcement.");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("Add announcement error:", error);
+        alert(error.response?.data?.message || "Failed to add announcement.");
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
-  
-  
+
   const deleteAnnouncement = (id: string) => {
     const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
 
@@ -79,7 +86,7 @@ export default function AddAnnouncementPage() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
-        setAnnouncements(announcements.filter((a) => a._id !== id));
+        setAnnouncements((prev) => prev.filter((a) => a._id !== id));
       })
       .catch((err) => {
         console.error("Delete error:", err);
@@ -109,9 +116,7 @@ export default function AddAnnouncementPage() {
             className="border p-3 rounded flex justify-between items-center"
           >
             <span>{a.message}</span>
-            <Button onClick={() => deleteAnnouncement(a._id)}>
-              Delete
-            </Button>
+            <Button onClick={() => deleteAnnouncement(a._id)}>Delete</Button>
           </li>
         ))}
       </ul>
@@ -127,7 +132,7 @@ export default function AddAnnouncementPage() {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order: any) => (
+          {orders.map((order) => (
             <tr key={order._id}>
               <td>{order._id}</td>
               <td>{order.userId}</td>
@@ -140,5 +145,6 @@ export default function AddAnnouncementPage() {
     </div>
   );
 }
+
 
 AddAnnouncementPage.auth = true;
