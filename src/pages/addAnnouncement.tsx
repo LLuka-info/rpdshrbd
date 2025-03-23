@@ -30,12 +30,12 @@ export default function AddAnnouncementPage() {
     }
 
     axios
-      .get(`http://localhost:5000/api/orders?userId=${userId}`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders?userId=${userId}`)
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Orders error:", err));
 
     axios
-      .get(`http://localhost:5000/api/announcements`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/announcements`)
       .then((res) => {
         console.log("Announcements fetched:", res.data);
         setAnnouncements(res.data);
@@ -57,7 +57,7 @@ export default function AddAnnouncementPage() {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/announcements`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/announcements`,
         { message: newAnnouncement },
         {
           headers: {
@@ -82,7 +82,7 @@ export default function AddAnnouncementPage() {
     const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
 
     axios
-      .delete(`http://localhost:5000/api/announcements/${id}`, {
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/announcements/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

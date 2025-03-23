@@ -59,7 +59,7 @@ export default function AddProduct() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/products", productData, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, productData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -21,7 +21,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
@@ -71,7 +71,7 @@ export default function AdminDashboard() {
     const token = user?.token;
 
     axios
-      .delete(`http://localhost:5000/api/products/${product._id}`, {
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${product._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
     }
 
     axios
-      .put(`http://localhost:5000/api/products/${product._id}`, 
+      .put(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${product._id}`, 
         { popular: !product.popular },
         { headers: { Authorization: `Bearer ${token}` } }
       )

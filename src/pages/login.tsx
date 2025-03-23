@@ -12,7 +12,7 @@ export default function LoginPage() {
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, { email, password });
       if (res.data.user) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         console.log("User set in localStorage:", localStorage.getItem("user")); // Debug log
