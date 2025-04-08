@@ -142,7 +142,7 @@ export default function AddAnnouncementPage() {
         ))}
       </ul>
 
-      <h2 className="text-xl font-semibold mt-10">📦 Orders</h2>
+            <h2 className="text-xl font-semibold mt-10">📦 Orders</h2>
       <table className="w-full mt-2 border text-sm">
         <thead>
           <tr>
@@ -175,6 +175,7 @@ export default function AddAnnouncementPage() {
           ))}
         </tbody>
       </table>
+
     </div>
   );
 }
