@@ -26,7 +26,7 @@ export default function AddAnnouncementPage() {
     const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
   
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setOrders(res.data))
@@ -46,7 +46,7 @@ export default function AddAnnouncementPage() {
       const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
 
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders/${orderId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${orderId}`,
         { status: newStatus },
         {
           headers: {
