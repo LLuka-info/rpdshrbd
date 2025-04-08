@@ -10,10 +10,20 @@ interface Announcement {
 }
 
 interface Order {
-  _id: string;
+  orderId: string;
   userId: string;
   total: number;
   status: string;
+  customer: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    country: string;
+    postalCode: string;
+  };
+  items: { name: string; quantity: number; price: number }[];
 }
 
 const optiuniStatusComanda = [
@@ -199,7 +209,7 @@ export default function AddAnnouncementPage() {
             >
               <div className="mb-2 sm:mb-0">
                 <p className="font-semibold">ID:</p>
-                <p className="text-sm">{order._id}</p>
+                <p className="text-sm">{order.orderId}</p>
               </div>
 
               <div className="mb-2 sm:mb-0">
