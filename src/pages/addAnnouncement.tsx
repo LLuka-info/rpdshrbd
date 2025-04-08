@@ -179,7 +179,7 @@ export default function AddAnnouncementPage() {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td className="px-4 py-2">{order._id}</td>
+                <td className="px-4 py-2">{order.orderId}</td>
                 <td className="px-4 py-2">{order.userId}</td>
                 <td className="px-4 py-2">${order.total}</td>
                 <td className="px-4 py-2">
