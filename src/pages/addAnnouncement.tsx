@@ -23,16 +23,12 @@ export default function AddAnnouncementPage() {
   const [newAnnouncement, setNewAnnouncement] = useState("");
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const userId = user.id;
-
-    if (!userId) {
-      console.error("User ID not found in localStorage");
-      return;
-    }
-
+    const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
+  
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders?userId=`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Orders error:", err));
 
