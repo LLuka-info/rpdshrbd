@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "../../components/ui/button";
@@ -15,7 +16,18 @@ interface Order {
   status: string;
 }
 
-const optiuniStatusComanda = ["Asteptam Confirmarea Platii", "Plata Procesata", "Pe drum spre warehouse", "Produsele au ajuns in warehouse. Verifica e-mailul pentru pozele QC!", "A ajuns in Europa - Germania!", "A ajuns in Romania - Oradea", "Ai primit codul de tracking CARGUS pe e-mail!", "Comanda se afla la curier!", "Comanda a fost livrata!", "Colet refuzat!"];
+const optiuniStatusComanda = [
+  "Asteptam Confirmarea Platii",
+  "Plata Procesata",
+  "Pe drum spre warehouse",
+  "Produsele au ajuns in warehouse. Verifica e-mailul pentru pozele QC!",
+  "A ajuns in Europa - Germania!",
+  "A ajuns in Romania - Oradea",
+  "Ai primit codul de tracking CARGUS pe e-mail!",
+  "Comanda se afla la curier!",
+  "Comanda a fost livrata!",
+  "Colet refuzat!",
+];
 
 export default function AddAnnouncementPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -24,7 +36,7 @@ export default function AddAnnouncementPage() {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
-  
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -54,7 +66,6 @@ export default function AddAnnouncementPage() {
           },
         }
       );
-
 
       setOrders((prev) =>
         prev.map((order) =>
@@ -142,27 +153,71 @@ export default function AddAnnouncementPage() {
         ))}
       </ul>
 
-            <h2 className="text-xl font-semibold mt-10">📦 Orders</h2>
-      <table className="w-full mt-2 border text-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>User</th>
-            <th>Total</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
+      <h2 className="text-xl font-semibold mt-10 mb-4">📦 Orders</h2>
+
+      <div className="overflow-x-auto">
+        {/* Desktop/Table View */}
+        <table className="min-w-full table-auto border border-gray-200 hidden sm:table">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">ID</th>
+              <th className="px-4 py-2">User</th>
+              <th className="px-4 py-2">Total</th>
+              <th className="px-4 py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td className="px-4 py-2">{order._id}</td>
+                <td className="px-4 py-2">{order.userId}</td>
+                <td className="px-4 py-2">${order.total}</td>
+                <td className="px-4 py-2">
+                  <select
+                    value={order.status}
+                    onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                    className="border rounded px-2 py-1"
+                  >
+                    {optiuniStatusComanda.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Mobile View */}
+        <div className="block sm:hidden">
           {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.userId}</td>
-              <td>${order.total}</td>
-              <td>
+            <div
+              key={order._id}
+              className="border-b p-4 sm:flex sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="mb-2 sm:mb-0">
+                <p className="font-semibold">ID:</p>
+                <p className="text-sm">{order._id}</p>
+              </div>
+
+              <div className="mb-2 sm:mb-0">
+                <p className="font-semibold">User:</p>
+                <p className="text-sm">{order.userId}</p>
+              </div>
+
+              <div className="mb-2 sm:mb-0">
+                <p className="font-semibold">Total:</p>
+                <p className="text-sm">${order.total}</p>
+              </div>
+
+              <div className="mb-2 sm:mb-0">
+                <p className="font-semibold">Status:</p>
                 <select
                   value={order.status}
                   onChange={(e) => updateOrderStatus(order._id, e.target.value)}
-                  className="border rounded px-2 py-1"
+                  className="border rounded px-2 py-1 text-sm"
                 >
                   {optiuniStatusComanda.map((status) => (
                     <option key={status} value={status}>
@@ -170,14 +225,14 @@ export default function AddAnnouncementPage() {
                     </option>
                   ))}
                 </select>
-              </td>
-            </tr>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
-
+        </div>
+      </div>
     </div>
   );
 }
 
 AddAnnouncementPage.auth = true;
+
