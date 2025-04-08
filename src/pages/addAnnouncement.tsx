@@ -49,8 +49,8 @@ export default function AddAnnouncementPage() {
     try {
       const token = JSON.parse(localStorage.getItem("user") || "{}")?.token;
 
-      const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${orderId}`,
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders/${orderId}`,
         { status: newStatus },
         {
           headers: {
@@ -58,6 +58,7 @@ export default function AddAnnouncementPage() {
           },
         }
       );
+
 
       setOrders((prev) =>
         prev.map((order) =>
