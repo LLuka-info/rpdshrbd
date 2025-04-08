@@ -110,7 +110,7 @@ export default function AddAnnouncementPage() {
       // Use functional state update to correctly manage the previous state
       setAnnouncements((prevAnnouncements) => [res.data, ...prevAnnouncements]);
       setNewAnnouncement("");
-    } catch (error: unknown) {
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Add announcement error:", error);
         alert(error.response?.data?.message || "Failed to add announcement.");
@@ -178,14 +178,14 @@ export default function AddAnnouncementPage() {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order.orderId}> {/* Use orderId instead of _id */}
+              <tr key={order.orderId}>
                 <td className="px-4 py-2">{order.orderId}</td>
                 <td className="px-4 py-2">{order.userId}</td>
                 <td className="px-4 py-2">${order.total}</td>
                 <td className="px-4 py-2">
                   <select
                     value={order.status}
-                    onChange={(e) => updateOrderStatus(order.orderId, e.target.value)} {/* Use orderId instead of _id */}
+                    onChange={(e) => updateOrderStatus(order.orderId, e.target.value)}
                     className="border rounded px-2 py-1"
                   >
                     {optiuniStatusComanda.map((status) => (
@@ -204,12 +204,12 @@ export default function AddAnnouncementPage() {
         <div className="block sm:hidden">
           {orders.map((order) => (
             <div
-              key={order.orderId} {/* Use orderId instead of _id */}
+              key={order.orderId}
               className="border-b p-4 sm:flex sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="mb-2 sm:mb-0">
                 <p className="font-semibold">ID:</p>
-                <p className="text-sm">{order.orderId}</p> {/* Use orderId instead of _id */}
+                <p className="text-sm">{order.orderId}</p>
               </div>
 
               <div className="mb-2 sm:mb-0">
@@ -226,7 +226,7 @@ export default function AddAnnouncementPage() {
                 <p className="font-semibold">Status:</p>
                 <select
                   value={order.status}
-                  onChange={(e) => updateOrderStatus(order.orderId, e.target.value)} {/* Use orderId instead of _id */}
+                  onChange={(e) => updateOrderStatus(order.orderId, e.target.value)}
                   className="border rounded px-2 py-1 text-sm"
                 >
                   {optiuniStatusComanda.map((status) => (
