@@ -32,7 +32,7 @@ export default function AddAnnouncementPage() {
     }
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders?userId=${userId}`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/orders?userId=`)
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Orders error:", err));
 
