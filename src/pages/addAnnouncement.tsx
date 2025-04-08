@@ -107,7 +107,8 @@ export default function AddAnnouncementPage() {
         }
       );
 
-      setAnnouncements([res.data, ...announcements]);
+      // Use functional state update to correctly manage the previous state
+      setAnnouncements((prevAnnouncements) => [res.data, ...prevAnnouncements]);
       setNewAnnouncement("");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
