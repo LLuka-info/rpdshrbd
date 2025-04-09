@@ -11,6 +11,7 @@ interface Product {
   price: number;
   description: string;
   images: string[];
+  brand: string,
 }
 
 
