@@ -19,6 +19,7 @@ export default function AddProduct() {
     colors: [],
     popular: false,
     cnfansurl: "",
+    brand,
   });
 
   const handleAddImage = () => {
@@ -45,7 +46,7 @@ export default function AddProduct() {
       price: parseFloat(form.price),
       weight: parseFloat(form.weight),
       images,
-      sizes: ["S", "M", "L", "XL", "XXL"],
+      sizes: ["XS","S", "M", "L", "XL", "XXL"],
       colors: [],
       popular: false,
     };
@@ -80,6 +81,7 @@ export default function AddProduct() {
         <Input placeholder="Description" onChange={(e) => setForm({ ...form, description: e.target.value })} required />
         <Input placeholder="CNFans URL" onChange={(e) => setForm({ ...form, cnfansurl: e.target.value })} required />
         <Input placeholder="Weight" onChange={(e) => setForm({ ...form, weight: e.target.value })} required />
+        <Input placeholder="Brand (small letters)" onChange={(e) => setForm({ ...form, brand: e.target.value })} required />
 
         <select
           onChange={(e) => setForm({ ...form, category: e.target.value })}
