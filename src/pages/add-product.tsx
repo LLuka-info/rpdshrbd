@@ -19,7 +19,7 @@ export default function AddProduct() {
     colors: [],
     popular: false,
     cnfansurl: "",
-    brand,
+    brand: "",
   });
 
   const handleAddImage = () => {
