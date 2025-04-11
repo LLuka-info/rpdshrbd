@@ -93,7 +93,7 @@ export default function AddProduct() {
           <option value="pantaloni">Pantaloni</option>
           <option value="hanorace">Hanorace</option>
           <option value="geci">Geci</option>
-          <option value="bluze">Shorts</option>
+          <option value="shorts">Shorts</option>
           <option value="incaltaminte">Încălțăminte</option>
         </select>
 
