@@ -49,7 +49,6 @@ export default function AddProduct() {
       sizes: ["XS","S", "M", "L", "XL", "XXL"],
       colors: [],
       popular: false,
-      brand,
       
     };
 
